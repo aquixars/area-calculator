@@ -1,56 +1,59 @@
-﻿namespace AreaCalculator.Shapes
+﻿using AreaCalculator.Exceptions;
+
+namespace AreaCalculator.Shapes
 {
     public class Triangle : AbstractShape
     {
-        public double sideA { get; set; }
-        public double sideB { get; set; }
-        public double sideC { get; set; }
+        public double SideA { get; set; }
+        public double SideB { get; set; }
+        public double SideC { get; set; }
 
         protected override double CalculateAreaInternal()
         {
-            double s = (sideA + sideB + sideC) / 2;
-            return Math.Sqrt(s * (s - sideA) * (s - sideB) * (s - sideC));
+            double s = (SideA + SideB + SideC) / 2;
+            return Math.Sqrt(s * (s - SideA) * (s - SideB) * (s - SideC));
         }
 
         public bool IsRightAngled()
         {
-            // проверяем что треугольник существует
-            if (!IsValid())
+            try
             {
-                // todo: InvalidShapeException
-                throw new Exception();
-            }
+                ThrowIfInvalid();
 
-            // проверяем что треугольник прямоугольный
-            if (sideA * sideA + sideB * sideB == sideC * sideC ||
-                sideA * sideA + sideC * sideC == sideB * sideB ||
-                sideB * sideB + sideC * sideC == sideA * sideA)
+                // проверяем что треугольник прямоугольный
+                if (SideA * SideA + SideB * SideB == SideC * SideC ||
+                    SideA * SideA + SideC * SideC == SideB * SideB ||
+                    SideB * SideB + SideC * SideC == SideA * SideA)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
             {
-                return true;
+                throw ex;
             }
-
-            return false;
         }
 
         /// <summary>
         /// Проверка существования треугольника
         /// </summary>
-        /// <returns></returns>
-        private bool IsValid()
+        /// <exception cref="ZeroSideException">У треугольника одна из сторон не больше 0</exception>
+        /// <exception cref="InvalidSidesException">У треугольника сумма каких-либо двух сторон не больше третьей</exception>
+        private void ThrowIfInvalid()
         {
             // У треугольника должно быть три стороны
-            if (sideA == 0 || sideB == 0 || sideC == 0)
+            if (SideA <= 0 || SideB <= 0 || SideC <= 0)
             {
-                return false;
+                throw new ZeroSideException();
             }
 
             // У треугольника сумма любых двух сторон должна быть больше третьей
-            if (sideA + sideB <= sideC || sideA + sideC <= sideB || sideB + sideC <= sideA)
+            if (SideA + SideB <= SideC || SideA + SideC <= SideB || SideB + SideC <= SideA)
             {
-                return false;
+                throw new InvalidSidesException();
             }
-
-            return true;
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace AreaCalculator
+﻿namespace AreaCalculator.Shapes
 {
-    public abstract class Shape
+    public abstract class AbstractShape
     {
         public double CalculateArea()
         {
