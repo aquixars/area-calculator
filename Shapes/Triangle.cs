@@ -14,7 +14,7 @@ namespace AreaCalculator.Shapes
             return Math.Sqrt(s * (s - SideA) * (s - SideB) * (s - SideC));
         }
 
-        public bool IsRightAngled()
+        public bool IsRectangular()
         {
             try
             {
