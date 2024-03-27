@@ -2,9 +2,9 @@
 
 namespace AreaCalculator
 {
-    public class Calculator
+    public static class Calculator
     {
-        public double CalculateArea(AbstractShape shape)
+        public static double CalculateArea(AbstractShape shape)
         {
             return shape.CalculateArea();
         }

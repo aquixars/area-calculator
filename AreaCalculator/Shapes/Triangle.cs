@@ -8,6 +8,14 @@ namespace AreaCalculator.Shapes
         public double SideB { get; set; }
         public double SideC { get; set; }
 
+        public Triangle(double sideA, double sideB, double sideC)
+        {
+            SideA = sideA;
+            SideB = sideB;
+            SideC = sideC;
+            ThrowIfInvalid();
+        }
+
         protected override double CalculateAreaInternal()
         {
             double s = (SideA + SideB + SideC) / 2;
@@ -39,20 +47,20 @@ namespace AreaCalculator.Shapes
         /// <summary>
         /// Проверка существования треугольника
         /// </summary>
-        /// <exception cref="ZeroSideException">У треугольника одна из сторон не больше 0</exception>
-        /// <exception cref="InvalidSidesException">У треугольника сумма каких-либо двух сторон не больше третьей</exception>
+        /// <exception cref="InvalidSideException">У треугольника одна из сторон не больше 0</exception>
+        /// <exception cref="InvalidSidesSizeException">У треугольника сумма каких-либо двух сторон не больше третьей</exception>
         private void ThrowIfInvalid()
         {
             // У треугольника должно быть три стороны
             if (SideA <= 0 || SideB <= 0 || SideC <= 0)
             {
-                throw new ZeroSideException();
+                throw new InvalidSideException();
             }
 
             // У треугольника сумма любых двух сторон должна быть больше третьей
             if (SideA + SideB <= SideC || SideA + SideC <= SideB || SideB + SideC <= SideA)
             {
-                throw new InvalidSidesException();
+                throw new InvalidSidesSizeException();
             }
         }
     }
