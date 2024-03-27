@@ -2,12 +2,34 @@
 
 namespace AreaCalculator.Shapes
 {
+    /// <summary>
+    /// Класс для представления треугольника.
+    /// </summary>
     public class Triangle : AbstractShape
     {
+        /// <summary>
+        /// Первая сторона треугольника.
+        /// </summary>
         public double SideA { get; set; }
+
+        /// <summary>
+        /// Вторая сторона треугольника.
+        /// </summary>
         public double SideB { get; set; }
+
+        /// <summary>
+        /// Третья сторона треугольника.
+        /// </summary>
         public double SideC { get; set; }
 
+        /// <summary>
+        /// Создает новый экземпляр класса <see cref="Triangle"/>.
+        /// </summary>
+        /// <param name="sideA">Первая сторона треугольника.</param>
+        /// <param name="sideB">Вторая сторона треугольника.</param>
+        /// <param name="sideC">Третья сторона треугольника.</param>
+        /// <exception cref="InvalidSideException">У треугольника одна из сторон не больше 0.</exception>
+        /// <exception cref="InvalidSidesSizeException">У треугольника сумма каких-либо двух сторон не больше третьей.</exception>
         public Triangle(double sideA, double sideB, double sideC)
         {
             SideA = sideA;
@@ -16,12 +38,22 @@ namespace AreaCalculator.Shapes
             ThrowIfInvalid();
         }
 
+        /// <summary>
+        /// Вычисляет площадь треугольника.
+        /// </summary>
+        /// <returns>Площадь треугольника.</returns>
         protected override double CalculateAreaInternal()
         {
             double s = (SideA + SideB + SideC) / 2;
             return Math.Sqrt(s * (s - SideA) * (s - SideB) * (s - SideC));
         }
 
+        /// <summary>
+        /// Проверяет, является ли треугольник прямоугольным.
+        /// </summary>
+        /// <returns>true, если треугольник прямоугольный, иначе false.</returns>
+        /// <exception cref="InvalidSideException">У треугольника одна из сторон не больше 0.</exception>
+        /// <exception cref="InvalidSidesSizeException">У треугольника сумма каких-либо двух сторон не больше третьей.</exception>
         public bool IsRectangular()
         {
             try
@@ -45,10 +77,10 @@ namespace AreaCalculator.Shapes
         }
 
         /// <summary>
-        /// Проверка существования треугольника
+        /// Проверяет, существует ли треугольник.
         /// </summary>
-        /// <exception cref="InvalidSideException">У треугольника одна из сторон не больше 0</exception>
-        /// <exception cref="InvalidSidesSizeException">У треугольника сумма каких-либо двух сторон не больше третьей</exception>
+        /// <exception cref="InvalidSideException">У треугольника одна из сторон не больше 0.</exception>
+        /// <exception cref="InvalidSidesSizeException">У треугольника сумма каких-либо двух сторон не больше третьей.</exception>
         private void ThrowIfInvalid()
         {
             // У треугольника должно быть три стороны
