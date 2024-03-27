@@ -16,48 +16,42 @@ namespace AreaCalculatorTests
         }
 
         [Test]
-        public void CalculateArea_SidesAre3_4_5_Returns6()
-        {
-            // Arrange
-            var triangle = new Triangle(3, 4, 5);
-
-            // Act
-            var result = Calculator.CalculateArea(triangle);
-
-            // Assert
-            Assert.AreEqual(6, result);
-        }
-
-        [Test]
         public void TriangleCtor_SidesAre3_5_10_ThrowsEx()
         {
             Assert.Catch<InvalidSidesSizeException>(() => new Triangle(3, 5, 10));
         }
 
-        [Test]
-        public void IsRectangular_SidesAre3_4_5_ReturnsTrue()
+        [TestCase(3, 4, 5, ExpectedResult = 6)]
+        [TestCase(5, 12, 13, ExpectedResult = 30)]
+        [TestCase(10, 10, 10, ExpectedResult = 43.301270189221931d)]
+        [TestCase(6, 8, 10, ExpectedResult = 24)]
+        [TestCase(7, 8, 9, ExpectedResult = 26.832815729997478d)]
+        public double CalculateArea_ValidSides_ReturnsCorrectArea(double a, double b, double c)
         {
             // Arrange
-            var triangle = new Triangle(3, 4, 5);
+            var triangle = new Triangle(a, b, c);
 
             // Act
-            var result = triangle.IsRectangular();
+            var result = Calculator.CalculateArea(triangle);
 
             // Assert
-            Assert.IsTrue(result);
+            return result;
         }
 
-        [Test]
-        public void IsRectangular_SidesAre4_4_4_ReturnsFalse()
+        [TestCase(3, 4, 4, ExpectedResult = false)]
+        [TestCase(3, 4, 5 - 0.0000001, ExpectedResult = false)]
+        [TestCase(3, 4, 5, ExpectedResult = true)]
+        [TestCase(3, 4, 5 + 0.0000001, ExpectedResult = false)]
+        public bool IsRectangular(double a, double b, double c)
         {
             // Arrange
-            var triangle = new Triangle(4, 4, 4);
+            var triangle = new Triangle(a, b, c);
 
             // Act
-            var result = triangle.IsRectangular();
+            var isRight = triangle.IsRectangular();
 
             // Assert
-            Assert.IsFalse(result);
+            return isRight;
         }
     }
 }
