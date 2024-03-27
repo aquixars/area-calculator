@@ -10,16 +10,19 @@ namespace AreaCalculatorTests
         [TestCase(99, -2, 5)]
         [TestCase(2, 1, -3)]
         [TestCase(0, 0, 0)]
-        public void TriangleCtor_InvalidSidesSize_ThrowsEx(double a, double b, double c)
+        public void TriangleCtor_InvalidSide_ThrowsEx(double a, double b, double c)
         {
             Assert.Catch<InvalidSideException>(() => new Triangle(a, b, c));
         }
 
-        [Test]
-        public void TriangleCtor_SidesAre3_5_10_ThrowsEx()
+        [TestCase(3, 5, 10)]
+        [TestCase(2, 4, 8)]
+        [TestCase(1, 2, 4)]
+        public void TriangleCtor_InvalidSidesSize_ThrowsEx(double sideA, double sideB, double sideC)
         {
-            Assert.Catch<InvalidSidesSizeException>(() => new Triangle(3, 5, 10));
+            Assert.Catch<InvalidSidesSizeException>(() => new Triangle(sideA, sideB, sideC));
         }
+
 
         [TestCase(3, 4, 5, ExpectedResult = 6)]
         [TestCase(5, 12, 13, ExpectedResult = 30)]
